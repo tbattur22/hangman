@@ -8,7 +8,17 @@
 - Html/JavaScript/TailwindCSS
 
 ### How to run locally
+#### Browser client via Phoenix
 - Clone the repo
 - cd b2
 - mix deps.get
 - mix phx.server
+
+#### Text Client via iex repl
+- Clone the repo
+- Open two terminal tabs locally
+- In 1st tab cd hangaman
+- iex --sname hangman@localhost -S mix (start the hangman server)
+- In 2nd tab cd text_client
+- iex --sname c1 -S mix
+- TextClient.start()
