@@ -6,3 +6,9 @@
 - Elixir 1.8.4/OTP 27
 - Phoenix 1.7.21/LiveView
 - Html/JavaScript/TailwindCSS
+
+### How to run locally
+- Clone the repo
+- cd b2
+- mix deps.get
+- mix phx.server
