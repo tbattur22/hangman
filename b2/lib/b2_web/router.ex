@@ -17,6 +17,12 @@ defmodule B2Web.Router do
   scope "/", B2Web do
     pipe_through :browser
 
+    get "/", PageController, :home
+  end
+
+  scope "/hangman", B2Web do
+    pipe_through :browser
+
     live "/", Live.Game
   end
 

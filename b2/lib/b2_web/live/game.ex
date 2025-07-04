@@ -3,11 +3,14 @@ defmodule B2Web.Live.Game do
   use B2Web, :live_view
 
   def mount(_params, _sessions, socket) do
-    game = Hangman.new_game()
-    tally = Hangman.tally(game)
-    socket = socket|> assign(%{game: game, tally: tally})
+    if (connected?(socket)) do
+      game = Hangman.new_game()
+      tally = Hangman.tally(game)
 
-    {:ok, socket}
+      {:ok, socket|> assign(%{game: game, tally: tally})}
+    else
+      {:ok, socket}
+    end
   end
 
   def handle_event("make_move", %{ "key" => key }, socket) do
@@ -15,7 +18,7 @@ defmodule B2Web.Live.Game do
     { :noreply, assign(socket, :tally, tally) }
   end
 
-  def render (assigns) do
+  def render (%{game: _game, tally: _tally} = assigns) do
     ~H"""
     <div class="game-holder h-fit grid place-items-center md:flex" phx-window-keyup="make_move">
       <div class="mb-1">
@@ -26,6 +29,14 @@ defmodule B2Web.Live.Game do
         <.live_component module={__MODULE__.WordsSoFar} id="3" tally={assigns.tally} game={assigns.game} />
       </div>
     </div>
+    """
+  end
+
+  @doc """
+  No need to return any html for 1st static html render
+  """
+  def render (assigns) do
+    ~H"""
     """
   end
 end
