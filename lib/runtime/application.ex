@@ -15,6 +15,9 @@ defmodule Hangman.Runtime.Application do
   end
 
   def start_game(uid) do
-    DynamicSupervisor.start_child(@super_name, { Hangman.Runtime.Server, uid})
+    case Registry.lookup(@registry, "HangmanServer_#{uid}") do
+      [{pid, _}] -> {:ok, pid}
+      [] -> DynamicSupervisor.start_child(@super_name, { Hangman.Runtime.Server, uid})
+    end
   end
 end
